@@ -86,7 +86,7 @@ var parent = new Vue({
             },
             {
                 name: 'Bruce Lee',
-                email: 'bruce@lee.com'
+                email: 'burce@lee.com'
             }
         ]
     }
@@ -124,7 +124,7 @@ var parent = new Vue({
                 },
                 {
                     name: 'Bruce Lee',
-                    email: 'bruce@lee.com'
+                    email: 'burce@lee.com'
                 }
             ]
         }
