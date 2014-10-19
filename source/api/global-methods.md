@@ -7,7 +7,7 @@ order: 5
 
 - **options** `Object`
 
-Create a subclass of the Vue class. Most [instantiation options](/api/instantiation-options.html) can be used here, with the exception of the `el` option because you can't create multiple ViewModel instances on the same element. Also see [Composing ViewModels](/guide/composition.html).
+Create a subclass of the Vue class. Most [instantiation options](/api/instantiation-options.html) can be used here, with the exception of the `el` option because you can't create multiple ViewModel instances on the same element. Also see [Component System](/guide/components.html).
 
 **Example**
 
@@ -87,7 +87,7 @@ Here are all the options with their default values:
 - **id** `String`
 - **definition** `Function` or `Object` *optional*
 
-Register or retrieve a global custom directive. For more details see [Writing Custom Directives](/guide/directives.html#Writing_a_Custom_Directive).
+Register or retrieve a global custom directive. For more details see [Writing Custom Directives](/guide/custom-directive.html).
 
 ### Vue.filter( id, definition )
 
@@ -101,7 +101,7 @@ Register or retrieve a global custom filter. For more details see [Writing Custo
 - **id** `String`
 - **definition** `Function Constructor` or `Object` *optional*
 
-Register or retrieve a global component. For more details see [Composing ViewModels](/guide/composition.html).
+Register or retrieve a global component. For more details see [Component System](/guide/components.html).
 
 ### Vue.effect( id, definition )
 
