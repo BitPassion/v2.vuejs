@@ -184,5 +184,3 @@ Vue.directive('example', {
   }
 })
 ```
-
-Next, we'll see how to [write a custom filter](/guide/custom-filter.html).
