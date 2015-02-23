@@ -118,7 +118,7 @@ var parent = new Vue({
 
 #### Passing Down Individual Properties
 
-`v-with` can also be used with an argument in the form of `v-with="childProp: parentProp"`. This means passing down `parent[parentProp]` to the child as `child[childProp]`. Note this data inheritance is one-way: when `parentProp` changes, `childProp` will be updated accordingly, however not the other way around.
+`v-with` can also be used with an argument in the form of `v-with="childProp: parentProp"`. This means passing down `parent[parentProp]` to the child as `child[childProp]`, creating a two-way binding (as of 0.11.5).
 
 **Example:**
 
@@ -292,7 +292,7 @@ An event name to wait for on the incoming child component before switching it wi
 **Example:**
 
 ``` html
-<div v-component="{{view}}" wait-for="data-loaded"></div>
+<div v-component="&#123;{view}&#125;" wait-for="data-loaded"></div>
 ```
 ``` js
 // component definition
@@ -323,7 +323,7 @@ By default, the transitions for incoming and outgoing components happen simultan
 
 ``` html
 <!-- fade out first, then fade in -->
-<div v-component="{{view}}"
+<div v-component="&#123;{view}&#125;"
   v-transition="fade"
   transition-mode="out-in">
 </div>
