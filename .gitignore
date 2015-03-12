@@ -1,7 +1,6 @@
 .DS_Store
-Thumbs.db
+node_modules
 db.json
-*.log
-node_modules/
-public/
-.deploy*/
+public
+.deploy
+debug.log

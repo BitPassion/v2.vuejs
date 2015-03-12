@@ -63,7 +63,7 @@ Prefixed HTML attributes that tell Vue.js to do something about a DOM element.
 <div v-text="message"></div>
 ```
 
-Here the div element has a `v-text` directive with the value `message`. This tells Vue.js to keep the div's textContent in sync with the Vue instance's `message` property.
+Here the div element has a `v-text` directive with the value `message`. What it does is telling Vue.js to keep the div's textContent in sync with the Vue instance's `message` property.
 
 Directives can encapsulate arbitrary DOM manipulations. For example `v-attr` manipulates an element's attributes, `v-repeat` clones an element based on an Array, `v-on` attaches event listeners... we will cover them later.
 
@@ -72,7 +72,7 @@ Directives can encapsulate arbitrary DOM manipulations. For example `v-attr` man
 You can also use mustache-style bindings, both in text and in attributes. They are translated into `v-text` and `v-attr` directives under the hood. For example:
 
 ```html
-<div id="person-{{id}}">Hello {{name}}!</div>
+<div id="person-&#123;&#123;id&#125;&#125;">Hello &#123;&#123;name&#125;&#125;!</div>
 ```
 
 Although it is convenient, there are a few things you need to be aware of:
@@ -84,7 +84,7 @@ Although it is convenient, there are a few things you need to be aware of:
 You can use triple mustaches for unescaped HTML, which translates to `v-html` internally:
 
 ``` html
-{{{ safeHTMLString }}}
+{&#123;&#123; safeHTMLString &#125;&#125;}
 ```
 
 However, this can open up windows for potential XSS attacks, therefore it is suggested that you only use triple mustaches when you are absolutely sure about the security of the data source, or pipe it through a custom filter that sanitizes untrusted HTML.
@@ -92,7 +92,7 @@ However, this can open up windows for potential XSS attacks, therefore it is sug
 Finally, you can add `*` to your mustache bindings to indicate a one-time only interpolation, which does not react to data changes:
 
 ``` html
-{{* onlyOnce }}
+{&#123;* onlyOnce &#125;}
 ```
 
 ### Filters
@@ -100,7 +100,7 @@ Finally, you can add `*` to your mustache bindings to indicate a one-time only i
 Filters are functions used to process the raw values before updating the View. They are denoted by a "pipe" inside directives or bindings:
 
 ```html
-<div>{{message | capitalize}}</div>
+<div>&#123;&#123;message | capitalize&#125;&#125;</div>
 ```
 
 Now before the div's textContent is updated, the `message` value will first be passed through the `capitalize` function. For more details see [Filters in Depth](/guide/filters.html).
@@ -121,13 +121,13 @@ This simple mechanism enables declarative reuse and composition of Vue instances
 
 ``` html
 <div id="demo">
-  <h1>{{title | uppercase}}</h1>
+  <h1>&#123;&#123;title | uppercase&#125;&#125;</h1>
   <ul>
     <li
       v-repeat="todos"
       v-on="click: done = !done"
-      class="{{done ? 'done' : ''}}">
-      {{content}}
+      class="&#123;&#123;done ? 'done' : ''&#125;&#125;">
+      &#123;&#123;content&#125;&#125;
     </li>
   </ul>
 </div>
