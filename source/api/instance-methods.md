@@ -12,7 +12,7 @@ order: 4
 - **expression** `String`
 - **callback( newValue, oldValue )** `Function`
 - **deep** `Boolean` *optional*
-- **immdediate** `Boolean` *optional*
+- **immediate** `Boolean` *optional*
 
 Watch an expression on the Vue instance for changes. The expression can be a single keypath or actual expressions:
 
@@ -90,7 +90,7 @@ Evaluate a piece of template string containing mustache interpolations. Note tha
 
 ``` js
 // assuming vm.msg = 'hello'
-vm.$interpolate('{&#123;msg&#125;} world!') // -> 'hello world!'
+vm.$interpolate('{{msg}} world!') // -> 'hello world!'
 ```
 
 ### vm.$log( [keypath] )
