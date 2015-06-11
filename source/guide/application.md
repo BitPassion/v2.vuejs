@@ -55,7 +55,7 @@ With this mechanism it's very easy to leverage standalone routing libraries such
 
 ## Communication with Server
 
-All Vue instances can have their raw `$data` directly serialized with `JSON.stringify()` with no additional effort. The community has contributed the [vue-resource](https://github.com/vuejs/vue-resource) plugin, which provides an easy way to work with RESTful APIs. You can also use any Ajax library you like, e.g. `$.ajax` or [SuperAgent](https://github.com/visionmedia/superagent). Vue.js also plays nicely with no-backend services such as Firebase and Parse.
+All Vue instances can have their raw `$data` directly serialized with `JSON.stringify()` with no additional effort. You can use any Ajax component you like, for example [SuperAgent](https://github.com/visionmedia/superagent). It also plays nicely with no-backend services such as Firebase.
 
 ## Unit Testing
 
@@ -110,10 +110,8 @@ describe('my-component', function () {
 })
 ```
 
-<p class="tip">Since Vue.js directives react to data updates asynchronously, when you are asserting DOM state after changing the data, you will have to do so in a `Vue.nextTick` callback.</p>
+<p class="tip">Since Vue.js directives react to data updates asynchronously, when you are asserting DOM state after changing the data, you will have to do so in a `Vue.nextTick` callback. Alternatively you can set `Vue.config.async = false` during tests, so you can assert the DOM state synchronously right after the data change.</p>
 
 ## An Example
 
 The [Vue.js Hackernews Clone](https://github.com/yyx990803/vue-hackernews) is an example application that uses Webpack + vue-loader for code organization, Director.js for routing, and HackerNews' official Firebase API as the backend. It's by no means a big application, but it demonstrates the combined usage of the concepts discussed on this page.
-
-Next: [Extending Vue](/guide/extending.html).
