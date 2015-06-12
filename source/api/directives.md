@@ -41,8 +41,6 @@ If a directive argument is provided, the argument will be the class to be toggle
 "></span>
 ```
 
-Alternatively, you can bind the directive directly to an Object. The keys of the object will the list of classes to toggle based on corresponding values.
-
 ### v-attr
 
 - This directive requires an argument.
@@ -54,10 +52,6 @@ Updates the element's given attribute (indicated by the argument).
 ``` html
 <canvas v-attr="width:w, height:h"></canvas>
 ```
-
-Falsy values except 0 will remove the attribute.
-
-Alternatively, you can bind the directive directly to an Object. The keys of the object will the list of attributes to set based on corresponding values.
 
 Internally, &#123;&#123; Mustache &#125;&#125; interpolations inside attributes are compiled into computed `v-attr` directives.
 
@@ -157,7 +151,7 @@ Will render:
 - This directive requires the value to be an Array, Object or Number.
 - This directive can trigger transitions.
 - This directive accepts an optional argument.
-- Directive params: [`track-by`](/guide/list.html#Using_track-by), [`stagger`](/guide/transitions.html#Staggering_Transitions), [`enter-stagger`](/guide/transitions.html#Staggering_Transitions), [`leave-stagger`](/guide/transitions.html#Staggering_Transitions)
+- Directive params: [`track-by`](/guide/list.html#Using_track-by)
 
 Create a child ViewModel for every item in the binding Array or Object. If the value is a whole Number then that many child ViewModels are created. These child ViewModels will be automatically created / destroyed when mutating methods, e.g. `push()`, are called on the Array or Object, or the number is increased or decreased.
 
@@ -184,6 +178,22 @@ If an argument is provided, a wrapper data object will always be created, using 
 ```
 
 For detailed examples, see [Displaying a List](/guide/list.html).
+
+### v-events
+
+- This directive can only be used on components.
+- This directive accepts either a method name, or a single expression statement.
+
+Allows a parent instance to listen to events on a child instance. The difference from `v-on` is that `v-events` listens to Vue's component system events created via `vm.$emit()` rather than DOM events. This directive allows more decoupled parent-child communication without having to hard-code event listeners into the parent component. Note that it can only be used on a component root element from the parent template.
+
+**Example:**
+
+``` html
+<!-- inside parent template -->
+<my-component v-events="change: onChildChange"></my-component>
+```
+
+When the child component calls `this.$emit('change', ...)`, the parent's `onChildChange` method will be invoked with additional arguments passed to `$emit()`.
 
 ## Literal Directives
 
