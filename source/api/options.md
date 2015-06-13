@@ -103,7 +103,7 @@ vm.a       // -> 2
 vm.aDouble // -> 4
 ```
 
-### props
+### paramAttributes
 
 - **Type:** `Array`
 
@@ -113,7 +113,7 @@ An array of attribute names to be set on the Vue instance as initial data. Usefu
 
 ``` js
 Vue.component('param-demo', {
-  props: ['size', 'message'],
+  paramAttributes: ['size', 'message'],
   compiled: function () {
     console.log(this.size)    // -> 100
     console.log(this.message) // -> 'hello!'
@@ -125,14 +125,15 @@ Vue.component('param-demo', {
 <param-demo size="100" message="hello!"></param-demo>
 ```
 
-For passing data more details see the following:
+Param attributes can also contain interpolation tags. The interpolation will be evaluated against the parent, and under the hood they will be compiled as [`v-with`](/api/directives.html#v-with), which means when the value of the interpolated expression changes, the component's corresponding property will also be updated:
 
-- [Prop Binding Types](/guide/components.html#Prop_Binding_Types)
-- [Passing Callbacks as Props](/guide/components.html#Passing_Callbacks_as_Props)
+``` html
+<param-demo message="{{parentMessage}}"></param-demo>
+```
 
 #### Notes on hyphened attributes
 
-HTML attribute names ignore upper and lower case differences, so we usually use hyphened attributes instead of camel case. There are some special cases when using `props` with attributes that contains hyphens:
+HTML attribute names ignore upper and lower case differences, so we usually use hyphened attributes instead of camel case. There are some special cases when using `paramAttributes` with attributes that contains hyphens:
 
 1. If the attribute is a data attribute, the `data-` prefix will be auto stripped;
 
