@@ -258,7 +258,7 @@ Compare the syntax:
 <child :msg.once="parentMsg"></child>
 ```
 
-The two-way binding will sync the change of child's `msg` property back to the parent's `parentMsg` property. The one-time binding, once set up, will not sync future changes between the the parent and the child.
+The two-way binding will sync the change of child's `msg` property back to the parent's `parentMsg` property. The one-time binding, once set up, will not sync future changes between the parent and the child.
 
 <p class="tip">Note that if the prop being passed down is an Object or an Array, it is passed by reference. Mutating the Object or Array itself inside the child **will** affect parent state, regardless of the binding type you are using.</p>
 
@@ -461,7 +461,7 @@ Despite the existence of props and events, sometimes you might still need to dir
 ``` js
 var parent = new Vue({ el: '#parent' })
 // access child component instance
-var child = parent.$.profile
+var child = parent.$refs.profile
 ```
 
 When `v-ref` is used together with `v-for`, the ref you get will be an Array or an Object containing the child components mirroring the data source.
