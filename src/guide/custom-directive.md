@@ -118,7 +118,7 @@ Vue.directive('demo', {
 var demo = new Vue({
   el: '#demo',
   data: {
-    msg: 'hello!'
+    msg: 'world!'
   }
 })
 </script>
