@@ -1,5 +1,5 @@
 /*!
- * Vue.js v1.0.4
+ * Vue.js v1.0.3
  * (c) 2015 Evan You
  * Released under the MIT License.
  */
@@ -146,7 +146,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	extend(p, __webpack_require__(65))
 	extend(p, __webpack_require__(66))
 
-	Vue.version = '1.0.4'
+	Vue.version = '1.0.3'
 	module.exports = _.Vue = Vue
 
 	/* istanbul ignore if */
@@ -2409,9 +2409,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  'if'
 	]
 
-	// default directive priority
-	var DEFAULT_PRIORITY = 1000
-
 	/**
 	 * Compile a template and return a reusable composite link
 	 * function, which recursively contains more link functions
@@ -2494,8 +2491,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 
 	function directiveComparator (a, b) {
-	  a = a.descriptor.def.priority || DEFAULT_PRIORITY
-	  b = b.descriptor.def.priority || DEFAULT_PRIORITY
+	  a = a.descriptor.def.priority || 0
+	  b = b.descriptor.def.priority || 0
 	  return a > b ? -1 : a === b ? 0 : 1
 	}
 
@@ -2600,17 +2597,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  } else if (("development") !== 'production' && containerAttrs) {
 	    // warn container directives for fragment instances
-	    var names = containerAttrs.map(function (attr) {
-	      return '"' + attr.name + '"'
-	    }).join(', ')
-	    var plural = containerAttrs.length > 1
-	    _.warn(
-	      'Attribute' + (plural ? 's ' : ' ') + names +
-	      (plural ? ' are' : ' is') + ' ignored on component ' +
-	      '<' + options.el.tagName.toLowerCase() + '> because ' +
-	      'the component is a fragment instance: ' +
-	      'http://vuejs.org/guide/components.html#Fragment_Instance'
-	    )
+	    containerAttrs.forEach(function (attr) {
+	      if (attr.name.indexOf('v-') === 0 || attr.name === 'transition') {
+	        _.warn(
+	          attr.name + ' is ignored on component ' +
+	          '<' + options.el.tagName.toLowerCase() + '> because ' +
+	          'the component is a fragment instance: ' +
+	          'http://vuejs.org/guide/components.html#Fragment_Instance'
+	        )
+	      }
+	    })
 	  }
 
 	  return function rootLinkFn (vm, el, scope) {
@@ -3700,8 +3696,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var parentScope = this._scope || this.vm
 	    var scope = Object.create(parentScope)
 	    // ref holder for the scope
-	    scope.$refs = Object.create(parentScope.$refs)
-	    scope.$els = Object.create(parentScope.$els)
+	    scope.$refs = {}
+	    scope.$els = {}
 	    // make sure point $parent to parent scope
 	    scope.$parent = parentScope
 	    // for two-way binding on alias
@@ -5062,10 +5058,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  bind: function () {
 	    var attr = this.arg
 	    var tag = this.el.tagName
-	    // should be deep watch on object mode
-	    if (!attr) {
-	      this.deep = true
-	    }
 	    // handle interpolation bindings
 	    if (this.descriptor.interp) {
 	      // only allow binding on native attributes
@@ -5351,8 +5343,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	var removeClass = _.removeClass
 
 	module.exports = {
-
-	  deep: true,
 
 	  update: function (value) {
 	    if (value && typeof value === 'string') {
@@ -6164,18 +6154,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * getters, so that every nested property inside the object
 	 * is collected as a "deep" dependency.
 	 *
-	 * @param {*} val
+	 * @param {Object} obj
 	 */
 
-	function traverse (val) {
-	  var i, keys
-	  if (_.isArray(val)) {
-	    i = val.length
-	    while (i--) traverse(val[i])
-	  } else if (_.isObject(val)) {
-	    keys = Object.keys(val)
-	    i = keys.length
-	    while (i--) traverse(val[keys[i]])
+	function traverse (obj) {
+	  var key, val, i
+	  for (key in obj) {
+	    val = obj[key]
+	    if (_.isArray(val)) {
+	      i = val.length
+	      while (i--) traverse(val[i])
+	    } else if (_.isObject(val)) {
+	      traverse(val)
+	    }
 	  }
 	}
 
@@ -7121,7 +7112,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	p.enterNextTick = function () {
 
-	  // Important hack:
+	  // Importnatn hack:
 	  // in Chrome, if a just-entered element is applied the
 	  // leave class while its interpolated property still has
 	  // a very small value (within one frame), Chrome will
@@ -9466,15 +9457,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	  while (i--) {
 	    key = params[i]
 	    mappedKey = _.camelize(key)
-	    val = _.getBindAttr(this.el, key)
+	    val = _.attr(this.el, key)
 	    if (val != null) {
-	      // dynamic
-	      this._setupParamWatcher(mappedKey, val)
-	    } else {
 	      // static
-	      val = _.attr(this.el, key)
+	      this.params[mappedKey] = val === '' ? true : val
+	    } else {
+	      // dynamic
+	      val = _.getBindAttr(this.el, key)
 	      if (val != null) {
-	        this.params[mappedKey] = val === '' ? true : val
+	        this._setupParamWatcher(mappedKey, val)
 	      }
 	    }
 	  }
@@ -9531,7 +9522,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      fn.call(scope, scope)
 	    }
 	    if (this.filters) {
-	      handler = scope._applyFilters(handler, null, this.filters)
+	      handler = this.vm._applyFilters(handler, null, this.filters)
 	    }
 	    this.update(handler)
 	    return true

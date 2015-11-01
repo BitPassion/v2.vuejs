@@ -146,7 +146,7 @@ var vm = new Vue({
     msg: 'hi'
   },
   computed: {
-    example: function () {
+    example: {
       return Date.now() + this.msg
     }
   }
