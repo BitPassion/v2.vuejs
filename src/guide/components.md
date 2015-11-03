@@ -647,7 +647,7 @@ Vue.component('activate-example', {
 })
 ```
 
-Note the `activate` hook is only used for dynamic component swapping - it does not affect static components and manual insertions with instance methods.
+Note the `activate` hook is only respected during dynamic component swapping or the initial render for static components - it does not affect manual insertions with instance methods.
 
 ### `transition-mode`
 
@@ -716,6 +716,26 @@ new Vue({
 {% endraw %}
 
 ## Misc
+
+### Components and v-for
+
+You can directly use `v-for` on the custom component, like any normal element:
+
+``` html
+<my-component v-for="item in items"></my-component>
+```
+
+However, this won't pass any data to the component, because components have isolated scopes of their own. In order to pass the iterated data into the component, we should also use props:
+
+``` html
+<my-component
+  v-for="item in items"
+  :item="item"
+  :index="$index">
+</my-component>
+```
+
+The reason for not automatically injecting `item` into the component is because that makes the component tightly coupled to how `v-for` works. Being explicit about where its data comes from makes the component reusable in other situations.
 
 ### Authoring Reusable Components
 
