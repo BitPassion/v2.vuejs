@@ -69,7 +69,7 @@ Vue.use(VueRouter)
 
 - [vue-devtools](https://github.com/vuejs/vue-devtools): A Chrome devtools extension for debugging Vue.js applications.
 
-- [vue-touch](https://github.com/vuejs/vue-touch): Add touch-gesture directives using Hammer.js.
+- [vue-touch](https://github.com/vuejs/vue-touch): Add touch-gesture directives using Hammer.js. (outdated)
 
 - [vue-element](https://github.com/vuejs/vue-element): Register Custom Elements with Vue.js.
 
