@@ -4,6 +4,11 @@ type: guide
 order: 12
 ---
 
+##What are Components?
+Components are one of the most powerful features of Vue.js, helping you extend basic HTML elements and create reusable code. At a high level, Components are custom elements that Vue.js’ compiler attaches a specified behavior, or even transforms the elements and their children.
+
+In some cases, a Component is indicated with a special attribute on an HTML element.
+
 ## Using Components
 
 ### Registration
@@ -133,7 +138,7 @@ The `el` option also requires a function value when used in `Vue.extend()`, for 
 
 ### `is` attribute
 
-Some HTML elements, for example `<table>`, have restrictions on what elements can appear inside them. Custom elements that are not in the whitelist will be hoisted out and thus not render properly. In such cases you should use the `is` special attribute to indicate a custom element:
+Some HTML elements, for example `<table>`, has restrictions on what elements can appear inside it. Custom elements that are not in the whitelist will be hoisted out and thus not render properly. In such cases you should use the `is` special attribute to indicate a custom element:
 
 ``` html
 <table>
