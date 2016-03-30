@@ -4,10 +4,6 @@ type: guide
 order: 12
 ---
 
-## What are Components?
-
-Components are one of the most powerful features of Vue.js. They help you extend basic HTML elements to encapsulate reusable code. At a high level, Components are custom elements that Vue.js’ compiler would attach specified behavior to. In some cases, they may also appear as a native HTML element extended with the special `is` attribute.
-
 ## Using Components
 
 ### Registration
@@ -135,36 +131,13 @@ var MyComponent = Vue.extend({
 
 The `el` option also requires a function value when used in `Vue.extend()`, for exactly the same reason.
 
-### Template Parsing
+### `is` attribute
 
-Vue.js template engine is DOM-based and uses native parser that comes with the browser instead of providing a custom one. There are benefits to this approach when compared to string-based template engines, but there are also caveats. Templates have to be individually valid pieces of HTML. Some HTML elements have restrictions on what elements can appear inside them. Most common of these restrictions are:
-
-- `a` can not contain other interactive elements (e.g. buttons and other links)
-- `li` should be a direct child of `ul` or `ol`, and both `ul` and `ol` can only contain `li`
-- `option` should be a direct child of `select`, and `select` can only contain `option` (and `optgroup`)
-- `table` can only contain `thead`, `tbody`, `tfoot` and `tr`, and these elements should be direct cildren of `table`
-- `tr` can only contain `th` and `td`, and these elements should be direct children of `tr`
-
-In practice these restriction can cause unexpected behavior. Although in simple cases it might appear to work, you can not rely on custom elements being expanded before browser validation. E.g. `<my-select><option>...</option></my-select>` is not a valid template even if `my-select` component eventually expands to `<select>...</select>`.
-
-Another consequence is that you can not use custom tags (including custom elements and special tags like `<component>`, `<template>` and `<partial>`) inside of `ul`, `select`, `table` and other elements with similar restrictions. Custom tags will be hoisted out and thus not render properly.
-
-In case of a custom element you should use the `is` special attribute:
+Some HTML elements, for example `<table>`, has restrictions on what elements can appear inside it. Custom elements that are not in the whitelist will be hoisted out and thus not render properly. In such cases you should use the `is` special attribute to indicate a custom element:
 
 ``` html
 <table>
   <tr is="my-component"></tr>
-</table>
-```
-
-In case of a `<template>` inside of a `<table>` you should use `<tbody>`, as tables are allowed to have multiple `tbody`:
-
-``` html
-<table>
-  <tbody v-for="item in items">
-    <tr>Even row</tr>
-    <tr>Odd row</tr>
-  </tbody>
 </table>
 ```
 
@@ -679,7 +652,6 @@ new Vue({
   <!-- component changes when vm.currentview changes! -->
 </component>
 ```
-### `keep-alive`
 
 If you want to keep the switched-out components alive so that you can preserve its state or avoid re-rendering, you can add a `keep-alive` directive param:
 
