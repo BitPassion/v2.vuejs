@@ -2,19 +2,13 @@
 title: Installation
 type: guide
 order: 0
-vue_version: 1.0.20
-dev_size: "258.56"
-min_size: "72.92"
-gz_size: "25.10"
+vue_version: 1.0.14
+dev_size: "247.79"
+min_size: "70.29"
+gz_size: "24.16"
 ---
 
-### Compatibility Note
-
-Vue.js does **not** support IE8 and below, because Vue.js uses ECMAScript 5 features that are un-shimmable in IE8. However Vue.js supports all [ECMAScript 5 compliant browsers](http://caniuse.com/#feat=es5).
-
-### Release Notes
-
-Detailed release notes for each version are available on [GitHub](https://github.com/vuejs/vue/releases).
+> **Compatibility Note:** Vue.js does not support IE8 and below.
 
 ## Standalone
 
@@ -36,7 +30,7 @@ Some environments, such as Google Chrome Apps, enforces Content Security Policy 
 
 ## NPM
 
-NPM is the recommended installation method when building large scale apps with Vue.js. It pairs nicely with a CommonJS module bundler such as [Webpack](http://webpack.github.io/) or [Browserify](http://browserify.org/). Vue.js also provides accompanying tools for authoring [Single File Components](application.html#Single-File-Components).
+NPM is the recommended installation method when building large scale apps with Vue.js. It pairs nicely with a CommonJS module bundler such as [Webpack](http://webpack.github.io/) or [Browserify](http://browserify.org/). Vue.js also provides accompanying tools for authoring [Single File Components](application.html#Single_File_Components).
 
 ``` bash
 # latest stable
@@ -62,7 +56,7 @@ $ npm run dev
 
 ## Dev Build
 
-**Important**: the CommonJS bundle distributed on NPM (`vue.common.js`) is only checked-in during releases on the `master` branch, so the file in the `dev` branch is the same as the stable release. To use Vue from the latest source code on GitHub, you will have to build it yourself!
+**Important**: the CommonJS bundle distributed on NPM (`vue.common.js`) is **not** checked into source control, therefore to use Vue from the latest source code on GitHub, you will have to build it yourself!
 
 ``` bash
 git clone https://github.com/vuejs/vue.git node_modules/vue

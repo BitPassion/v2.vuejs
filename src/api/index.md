@@ -84,23 +84,23 @@ type: api
 
   When async mode is off, Vue will perform all DOM updates synchronously upon detecting data change. This may help with debugging in some scenarios, but could also cause degraded performance and affect the order in which watcher callbacks are called. **`async: false` is not recommended in production.**
 
-### devtools
+### convertAllProperties
 
 - **Type:** `Boolean`
 
-- **Default:** `true` (`false` in production builds)
+- **Default:** `false`
 
 - **Usage:**
-
+  
   ``` js
-  Vue.config.devtools = true
+  Vue.config.convertAllProperties = true
   ```
 
-  Configure whether to allow [vue-devtools](https://github.com/vuejs/vue-devtools) inspection. This option's default value is `true` in development builds and `false` in production builds. You can set it to `true` to enable inspection for production builds.
+  (Added in 1.0.8) Turning this option on will enable Vue to convert and observe objects that already contain getters/setters defined with `Object.defineProperty`. This is off by default because there is a small performance cost and this is not a commonly-needed feature.
 
 ## Global API
 
-<h3 id="Vue-extend">Vue.extend( options )</h3>
+### Vue.extend( options )
 
 - **Arguments:**
   - `{Object} options`
@@ -126,7 +126,7 @@ type: api
       firstName: 'Walter',
       lastName: 'White',
       alias: 'Heisenberg'
-    }
+    }  
   })
   // mount it on an element
   profile.$mount('#mount-point')
@@ -140,10 +140,10 @@ type: api
 
 - **See also:** [Components](/guide/components.html)
 
-<h3 id="Vue-nextTick">Vue.nextTick( callback )</h3>
+### Vue.nextTick( callback )
 
 - **Arguments:**
-  - `{Function} callback`
+  - `{Functon} callback`
 
 - **Usage:**
 
@@ -158,9 +158,9 @@ type: api
   })
   ```
 
-- **See also:** [Async Update Queue](/guide/reactivity.html#Async-Update-Queue)
+- **See also:** [Async Update Queue](/guide/reactivity.html#Async_Update_Queue)
 
-<h3 id="Vue-set">Vue.set( object, key, value )</h3>
+### Vue.set( object, key, value )
 
 - **Arguments:**
   - `{Object} object`
@@ -175,7 +175,7 @@ type: api
 
 - **See also:** [Reactivity in Depth](/guide/reactivity.html)
 
-<h3 id="Vue-delete">Vue.delete( object, key )</h3>
+### Vue.delete( object, key )
 
 - **Arguments:**
   - `{Object} object`
@@ -187,14 +187,14 @@ type: api
 
 - **See also:** [Reactivity in Depth](/guide/reactivity.html)
 
-<h3 id="Vue-directive">Vue.directive( id, [definition] )</h3>
+### Vue.directive( id, [definition] )
 
 - **Arguments:**
   - `{String} id`
   - `{Function | Object} [definition]`
 
 - **Usage:**
-
+  
   Register or retrieve a global directive.
 
   ``` js
@@ -216,7 +216,7 @@ type: api
 
 - **See also:** [Custom Directives](/guide/custom-directive.html)
 
-<h3 id="Vue-elementDirective">Vue.elementDirective( id, [definition] )</h3>
+### Vue.elementDirective( id, [definition] )
 
 - **Arguments:**
   - `{String} id`
@@ -238,9 +238,9 @@ type: api
   var myDirective = Vue.elementDirective('my-element')
   ```
 
-- **See also:** [Element Directives](/guide/custom-directive.html#Element-Directives)
+- **See also:** [Element Directives](/guide/custom-directive.html#Element_Directives)
 
-<h3 id="Vue-filter">Vue.filter( id, [definition] )</h3>
+### Vue.filter( id, [definition] )
 
 - **Arguments:**
   - `{String} id`
@@ -268,7 +268,7 @@ type: api
 
 - **See also:** [Custom Filter](/guide/custom-filter.html)
 
-<h3 id="Vue-component">Vue.component( id, [definition] )</h3>
+### Vue.component( id, [definition] )
 
 - **Arguments:**
   - `{String} id`
@@ -280,18 +280,18 @@ type: api
 
   ``` js
   // register an extended constructor
-  Vue.component('my-component', Vue.extend({ /* ... */ }))
+  Vue.component('my-component', Vue.extend({ /* ... */}))
 
   // register an options object (automatically call Vue.extend)
   Vue.component('my-component', { /* ... */ })
 
-  // retrieve a registered component (always return constructor)
+  // retrive a registered component (always return constructor)
   var MyComponent = Vue.component('my-component')
   ```
 
 - **See also:** [Components](/guide/components.html).
 
-<h3 id="Vue-transition">Vue.transition( id, [hooks] )</h3>
+### Vue.transition( id, [hooks] )
 
 - **Arguments:**
   - `{String} id`
@@ -314,7 +314,7 @@ type: api
 
 - **See also:** [Transitions](/guide/transitions.html).
 
-<h3 id="Vue-partial">Vue.partial( id, [partial] )</h3>
+### Vue.partial( id, [partial] )
 
 - **Arguments:**
   - `{String} id`
@@ -334,7 +334,7 @@ type: api
 
 - **See also:** [Special Elements - &lt;partial&gt;](#partial).
 
-<h3 id="Vue-use">Vue.use( plugin, [options] )</h3>
+### Vue.use( plugin, [options] )
 
 - **Arguments:**
   - `{Object | Function} plugin`
@@ -346,7 +346,7 @@ type: api
 
 - **See also:** [Plugins](/guide/plugins.html).
 
-<h3 id="Vue-mixin">Vue.mixin( mixin )</h3>
+### Vue.mixin( mixin )
 
 - **Arguments:**
   - `{Object} mixin`
@@ -355,7 +355,7 @@ type: api
 
   Apply a mixin globally, which affects every Vue instance created afterwards. This can be used by plugin authors to inject custom behavior into components. **Not recommended in application code**.
 
-- **See also:** [Global Mixins](/guide/mixins.html#Global-Mixin)
+- **See also:** [Global Mixins](/guide/mixins.html#Global_Mixin)
 
 ## Options / Data
 
@@ -363,7 +363,7 @@ type: api
 
 - **Type:** `Object | Function`
 
-- **Restriction:** Only accepts `Function` when used in a component definition.
+- **Restriction:** Only accepts `Function` when used in `Vue.extend()`.
 
 - **Details:**
 
@@ -372,8 +372,6 @@ type: api
   Once the instance is created, the original data object can be accessed as `vm.$data`. The Vue instance also proxies all the properties found on the data object.
 
   Properties that start with `_` or `$` will **not** be proxied on the Vue instance because they may conflict with Vue's internal properties and API methods. You will have to access them as `vm.$data._property`.
-
-  When defining a **component**, `data` must be declared as a function that returns the initial data object, because there will be many instances created using the same definition. If we still use a plain object for `data`, that same object will be **shared by reference** across all instance created! By providing a `data` function, every time a new instance is created, we can simply call it to return a fresh copy of the initial data.
 
   If required, a deep clone of the original object can be obtained by passing `vm.$data` through `JSON.parse(JSON.stringify(...))`.
 
@@ -468,7 +466,7 @@ type: api
 
 - **See also:**
   - [Computed Properties](/guide/computed.html)
-  - [Reactivity in Depth: Inside Computed Properties](/guide/reactivity.html#Inside-Computed-Properties)
+  - [Reactivity in Depth: Inside Computed Properties](/guide/reactivity.html#Inside_Computed_Properties)
 
 ### methods
 
@@ -534,7 +532,7 @@ type: api
 
 - **Type:** `String | HTMLElement | Function`
 
-- **Restriction:** only accepts type `Function` when used in a component definition.
+- **Restriction:** only accepts type `Function` when used in `Vue.extend()`.
 
 - **Details:**
 
@@ -544,7 +542,7 @@ type: api
 
   If this option is available at instantiation, the instance will immediately enter compilation; otherwise, the user will have to explicitly call `vm.$mount()` to manually start the compilation.
 
-- **See also:** [Lifecycle Diagram](/guide/instance.html#Lifecycle-Diagram)
+- **See also:** [Lifecycle Diagram](/guide/instance.html#Lifecycle_Diagram)
 
 ### template
 
@@ -559,13 +557,13 @@ type: api
   Note that under certain situations, for example when the template contains more than one top-level element, or contains only plain text, the instance will become a fragment instance - i.e. one that manages a list of nodes rather than a single node. Non flow-control directives on the mount point for fragment instances are ignored.
 
 - **See also:**
-  - [Lifecycle Diagram](/guide/instance.html#Lifecycle-Diagram)
-  - [Content Distribution](/guide/components.html#Content-Distribution-with-Slots)
-  - [Fragment Instance](/guide/components.html#Fragment-Instance)
+  - [Lifecycle Diagram](/guide/instance.html#Lifecycle_Diagram)
+  - [Content Distribution](/guide/components.html#Content_Distribution_with_Slots)
+  - [Fragment Instance](/guide/components.html#Fragment_Instance)
 
 ### replace
 
-- **Type:** `Boolean`
+- **Type:** `Boolean`  
 
 - **Default:** `true`
 
@@ -618,35 +616,25 @@ type: api
 
 ## Options / Lifecycle Hooks
 
-### init
-
-- **Type:** `Function`
-
-- **Details:**
-
-  Called synchronously after the instance has just been initialized, before data observation and event / watcher setup.
-
-- **See also:** [Lifecycle Diagram](/guide/instance.html#Lifecycle-Diagram)
-
 ### created
 
 - **Type:** `Function`
 
 - **Details:**
-
+  
   Called synchronously after the instance is created. At this stage, the instance has finished processing the options which means the following have been set up: data observation, computed properties, methods, watch/event callbacks. However, DOM compilation has not been started, and the `$el` property will not be available yet.
 
-- **See also:** [Lifecycle Diagram](/guide/instance.html#Lifecycle-Diagram)
+- **See also:** [Lifecycle Diagram](/guide/instance.html#Lifecycle_Diagram)
 
 ### beforeCompile
 
 - **Type:** `Function`
 
 - **Details:**
-
+  
   Called right before the compilation starts.
 
-- **See also:** [Lifecycle Diagram](/guide/instance.html#Lifecycle-Diagram)
+- **See also:** [Lifecycle Diagram](/guide/instance.html#Lifecycle_Diagram)
 
 ### compiled
 
@@ -656,7 +644,7 @@ type: api
 
   Called after the compilation is finished. At this stage all directives have been linked so data changes will trigger DOM updates. However, `$el` is not guaranteed to have been inserted into the document yet.
 
-- **See also:** [Lifecycle Diagram](/guide/instance.html#Lifecycle-Diagram)
+- **See also:** [Lifecycle Diagram](/guide/instance.html#Lifecycle_Diagram)
 
 ### ready
 
@@ -666,14 +654,14 @@ type: api
 
   Called after compilation **and** the `$el` is **inserted into the document for the first time**, i.e. right after the first `attached` hook. Note this insertion must be executed via Vue (with methods like `vm.$appendTo()` or as a result of a directive update) to trigger the `ready` hook.
 
-- **See also:** [Lifecycle Diagram](/guide/instance.html#Lifecycle-Diagram)
+- **See also:** [Lifecycle Diagram](/guide/instance.html#Lifecycle_Diagram)
 
 ### attached
 
 - **Type:** `Function`
 
 - **Details:**
-
+  
   Called when `vm.$el` is attached to DOM by a directive or a VM instance method such as `$appendTo()`. Direct manipulation of `vm.$el` will **not** trigger this hook.
 
 ### detached
@@ -681,7 +669,7 @@ type: api
 - **Type:** `Function`
 
 - **Details:**
-
+  
   Called when `vm.$el` is removed from the DOM by a directive or a VM instance method. Direct manipulation of `vm.$el` will **not** trigger this hook.
 
 ### beforeDestroy
@@ -689,10 +677,10 @@ type: api
 - **Type:** `Function`
 
 - **Details:**
-
+  
   Called right before a Vue instance is destroyed. At this stage the instance is still fully functional.
 
-- **See also:** [Lifecycle Diagram](/guide/instance.html#Lifecycle-Diagram)
+- **See also:** [Lifecycle Diagram](/guide/instance.html#Lifecycle_Diagram)
 
 ### destroyed
 
@@ -704,7 +692,7 @@ type: api
 
   Note if there is a leaving transition, the `destroyed` hook is called **after** the transition has finished.
 
-- **See also:** [Lifecycle Diagram](/guide/instance.html#Lifecycle-Diagram)
+- **See also:** [Lifecycle Diagram](/guide/instance.html#Lifecycle_Diagram)
 
 ## Options / Assets
 
@@ -718,7 +706,7 @@ type: api
 
 - **See also:**
   - [Custom Directives](/guide/custom-directive.html)
-  - [Assets Naming Convention](/guide/components.html#Assets-Naming-Convention)
+  - [Assets Naming Convention](/guide/components.html#Assets_Naming_Convention)
 
 ### elementDirectives
 
@@ -729,8 +717,8 @@ type: api
   A hash of element directives to be made available to the Vue instance.
 
 - **See also:**
-  - [Element Directives](/guide/custom-directive.html#Element-Directives)
-  - [Assets Naming Convention](/guide/components.html#Assets-Naming-Convention)
+  - [Element Directives](/guide/custom-directive.html#Element_Directives)
+  - [Assets Naming Convention](/guide/components.html#Assets_Naming_Convention)
 
 ### filters
 
@@ -742,7 +730,7 @@ type: api
 
 - **See also:**
   - [Custom Filters](/guide/custom-filter.html)
-  - [Assets Naming Convention](/guide/components.html#Assets-Naming-Convention)
+  - [Assets Naming Convention](/guide/components.html#Assets_Naming_Convention)
 
 ### components
 
@@ -787,7 +775,7 @@ type: api
 
   Specify the parent instance for the instance to be created. Establishes a parent-child relationship between the two. The parent will be accessible as `this.$parent` for the child, and the child will be pushed into the parent's `$children` array.
 
-- **See also:** [Parent-Child Communication](/guide/components.html#Parent-Child-Communication)
+- **See also:** [Parent-Child Communication](/guide/components.html#Parent-Child_Communication)
 
 ### events
 
@@ -822,8 +810,8 @@ type: api
   ```
 
 - **See also:**
-  - [Instance Methods - Events](#Instance-Methods-Events)
-  - [Parent-Child Communication](/guide/components.html#Parent-Child-Communication)
+  - [Instance Methods - Events](#Instance_Methods_/_Events)
+  - [Parent-Child Communication](/guide/components.html#Parent-Child_Communication)
 
 ### mixins
 
@@ -900,7 +888,7 @@ type: api
 
 - **Details:**
 
-  The DOM element that the Vue instance is managing. Note that for [Fragment Instances](/guide/components.html#Fragment-Instance), `vm.$el` will return an anchor node that indicates the starting position of the fragment.
+  The DOM element that the Vue instance is managing. Note that for [Fragment Instances](/guide/components.html#Fragment_Instance), `vm.$el` will return an anchor node that indicates the starting position of the fragment.
 
 ### vm.$options
 
@@ -962,7 +950,7 @@ type: api
   An object that holds child components that have `v-ref` registered.
 
 - **See also:**
-  - [Child Component Refs](/guide/components.html#Child-Component-Refs)
+  - [Child Component Refs](/guide/components.html#Child_Component_Refs)
   - [v-ref](#v-ref).
 
 ### vm.$els
@@ -979,10 +967,10 @@ type: api
 
 ## Instance Methods / Data
 
-<h3 id="vm-watch">vm.$watch( expOrFn, callback, [options] )</h3>
+### vm.$watch( expOrFn, callback, [options] )
 
 - **Arguments:**
-  - `{String | Function} expOrFn`
+  - `{String|Function} expOrFn`
   - `{Function} callback`
   - `{Object} [options]`
     - `{Boolean} deep`
@@ -1051,7 +1039,7 @@ type: api
   // callback is fired immediately with current value of `a`
   ```
 
-<h3 id="vm-get">vm.$get( expression )</h3>
+### vm.$get( expression )
 
 - **Arguments:**
   - `{String} expression`
@@ -1074,7 +1062,7 @@ type: api
   vm.$get('a.b + 1') // -> 2
   ```
 
-<h3 id="vm-set">vm.$set( keypath, value )</h3>
+### vm.$set( keypath, value )
 
 - **Arguments:**
   - `{String} keypath`
@@ -1100,7 +1088,7 @@ type: api
       }
     }
   })
-
+  
   // set an existing path
   vm.$set('a.b', 2)
   vm.a.b // -> 2
@@ -1112,7 +1100,7 @@ type: api
 
 - **See also:** [Reactivity in Depth](/guide/reactivity.html)
 
-<h3 id="vm-delete">vm.$delete( key )</h3>
+### vm.$delete( key )
 
 - **Arguments:**
   - `{String} key`
@@ -1121,7 +1109,7 @@ type: api
 
   Delete a root level property on the Vue instance (and also its `$data`). Forces a digest cycle. Not recommended.
 
-<h3 id="vm-eval">vm.$eval( expression )</h3>
+### vm.$eval( expression )
 
 - **Arguments:**
   - `{String} expression`
@@ -1137,7 +1125,7 @@ type: api
   vm.$eval('msg | uppercase') // -> 'HELLO'
   ```
 
-<h3 id="vm-interpolate">vm.$interpolate( templateString )</h3>
+### vm.$interpolate( templateString )
 
 - **Arguments:**
   - `{String} templateString`
@@ -1153,7 +1141,7 @@ type: api
   vm.$interpolate('{{msg}} world!') // -> 'hello world!'
   ```
 
-<h3 id="vm-log">vm.$log( [keypath] )</h3>
+### vm.$log( [keypath] )
 
 - **Arguments:**
   - `{String} [keypath]`
@@ -1169,7 +1157,7 @@ type: api
 
 ## Instance Methods / Events
 
-<h3 id="vm-on">vm.$on( event, callback )</h3>
+### vm.$on( event, callback )
 
 - **Arguments:**
   - `{String} event`
@@ -1189,7 +1177,7 @@ type: api
   // -> "hi"
   ```
 
-<h3 id="vm-once">vm.$once( event, callback )</h3>
+### vm.$once( event, callback )
 
 - **Arguments:**
   - `{String} event`
@@ -1199,7 +1187,7 @@ type: api
 
   Listen for a custom event, but only once. The listener will be removed once it triggers for the first time.
 
-<h3 id="vm-off">vm.$off( [event, callback] )</h3>
+### vm.$off( [event, callback] )
 
 - **Arguments:**
   - `{String} [event]`
@@ -1215,7 +1203,7 @@ type: api
 
   - If both event and callback are given, remove the listener for that specific callback only.
 
-<h3 id="vm-emit">vm.$emit( event, [...args] )</h3>
+### vm.$emit( event, [...args] )
 
 - **Arguments:**
   - `{String} event`
@@ -1223,7 +1211,7 @@ type: api
 
   Trigger an event on the current instance. Any additional arguments will be passed into the listener's callback function.
 
-<h3 id="vm-dispatch">vm.$dispatch( event, [...args] )</h3>
+### vm.$dispatch( event, [...args] )
 
 - **Arguments:**
   - `{String} event`
@@ -1258,9 +1246,9 @@ type: api
   // true in its callback
   ```
 
-- **See also:** [Parent-Child Communication](/guide/components.html#Parent-Child-Communication)
+- **See also:** [Parent-Child Communication](/guide/components.html#Parent-Child_Communication)
 
-<h3 id="vm-broadcast">vm.$broadcast( event, [...args] )</h3>
+### vm.$broadcast( event, [...args] )
 
 - **Arguments:**
   - `{String} event`
@@ -1299,10 +1287,10 @@ type: api
 
 ## Instance Methods / DOM
 
-<h3 id="vm-appendTo">vm.$appendTo( elementOrSelector, [callback] )</h3>
+### vm.$appendTo( elementOrSelector, [callback] )
 
 - **Arguments:**
-  - `{Element | String} elementOrSelector`
+  - `{Element|String} elementOrSelector`
   - `{Function} [callback]`
 
 - **Returns:** `vm` - the instance itself
@@ -1311,10 +1299,10 @@ type: api
 
   Append the Vue instance's DOM element or fragment to target element. The target can be either an element or a querySelector string. This method will trigger transitions if present. The callback is fired after the transition has completed (or immediately if no transition has been triggered).
 
-<h3 id="vm-before">vm.$before( elementOrSelector, [callback] )</h3>
+### vm.$before( elementOrSelector, [callback] )
 
 - **Arguments:**
-  - `{Element | String} elementOrSelector`
+  - `{Element|String} elementOrSelector`
   - `{Function} [callback]`
 
 - **Returns:** `vm` - the instance itself
@@ -1323,10 +1311,10 @@ type: api
 
   Insert the Vue instance's DOM element or fragment before target element. The target can be either an element or a querySelector string. This method will trigger transitions if present. The callback is fired after the transition has completed (or immediately if no transition has been triggered).
 
-<h3 id="vm-after">vm.$after( elementOrSelector, [callback] )</h3>
+### vm.$after( elementOrSelector, [callback] )
 
 - **Arguments:**
-  - `{Element | String} elementOrSelector`
+  - `{Element|String} elementOrSelector`
   - `{Function} [callback]`
 
 - **Returns:** `vm` - the instance itself
@@ -1335,7 +1323,7 @@ type: api
 
   Insert the Vue instance's DOM element or fragment after target element. The target can be either an element or a querySelector string. This method will trigger transitions if present. The callback is fired after the transition has completed (or immediately if no transition has been triggered).
 
-<h3 id="vm-remove">vm.$remove( [callback] )</h3>
+### vm.$remove( [callback] )
 
 - **Arguments:**
   - `{Function} [callback]`
@@ -1343,10 +1331,10 @@ type: api
 - **Returns:** `vm` - the instance itself
 
 - **Usage:**
-
+  
   Remove the Vue instance's DOM element or fragment from the DOM. This method will trigger transitions if present. The callback is fired after the transition has completed (or immediately if no transition has been triggered).
 
-<h3 id="vm-nextTick">vm.$nextTick( callback )</h3>
+### vm.$nextTick( callback )
 
 - **Arguments:**
   - `{Function} [callback]`
@@ -1378,14 +1366,14 @@ type: api
 
 - **See also:**
   - [Vue.nextTick](#Vue-nextTick)
-  - [Async Update Queue](/guide/reactivity.html#Async-Update-Queue)
+  - [Async Update Queue](/guide/reactivity.html#Async_Update_Queue)
 
 ## Instance Methods / Lifecycle
 
-<h3 id="vm-mount">vm.$mount( [elementOrSelector] )</h3>
+### vm.$mount( [elementOrSelector] )
 
 - **Arguments:**
-  - `{Element | String} [elementOrSelector]`
+  - `{Element|String} [elementOrSelector]`
 
 - **Returns:** `vm` - the instance itself
 
@@ -1403,7 +1391,7 @@ type: api
   var MyComponent = Vue.extend({
     template: '<div>Hello!</div>'
   })
-
+  
   // create and mount to #app (will replace #app)
   new MyComponent().$mount('#app')
 
@@ -1414,9 +1402,9 @@ type: api
   new MyComponent().$mount().$appendTo('#container')
   ```
 
-- **See also:** [Lifecycle Diagram](/guide/instance.html#Lifecycle-Diagram)
+- **See also:** [Lifecycle Diagram](/guide/instance.html#Lifecycle_Diagram)
 
-<h3 id="vm-destroy">vm.$destroy( [remove] )</h3>
+### vm.$destroy( [remove] )
 
 - **Arguments:**
   - `{Boolean} [remove] - default: false`
@@ -1427,7 +1415,7 @@ type: api
 
   Triggers the `beforeDestroy` and `destroyed` hooks.
 
-- **See also:** [Lifecycle Diagram](/guide/instance.html#Lifecycle-Diagram)
+- **See also:** [Lifecycle Diagram](/guide/instance.html#Lifecycle_Diagram)
 
 ## Directives
 
@@ -1516,21 +1504,19 @@ type: api
 
 - **Param Attributes:**
   - [`track-by`](/guide/list.html#track-by)
-  - [`stagger`](/guide/transitions.html#Staggering-Transitions)
-  - [`enter-stagger`](/guide/transitions.html#Staggering-Transitions)
-  - [`leave-stagger`](/guide/transitions.html#Staggering-Transitions)
+  - [`stagger`](/guide/transitions.html#Staggering_Transitions)
+  - [`enter-stagger`](/guide/transitions.html#Staggering_Transitions)
+  - [`leave-stagger`](/guide/transitions.html#Staggering_Transitions)
 
 - **Usage:**
 
-  Render the element or template block multiple times based on the source data. The directive's value must use the special syntax `alias (in|of) expression` to provide an alias for the current element being iterated on:
+  Render the element or template block multiple times based on the source data. The expression must use the special syntax to provide an alias for the current element being iterated on:
 
   ``` html
   <div v-for="item in items">
     {{ item.text }}
   </div>
   ```
-
-  Note using `of` as the delimiter is only supported in 1.0.17+.
 
   Alternatively, you can also specify an alias for the index (or the key if used on an Object):
 
@@ -1554,8 +1540,6 @@ type: api
 - **Modifiers:**
   - `.stop` - call `event.stopPropagation()`.
   - `.prevent` - call `event.preventDefault()`.
-  - `.capture` - add event listener in capture mode.
-  - `.self` - only trigger handler if event was dispatched from this element.
   - `.{keyCode | keyAlias}` - only trigger handler on certain keys.
 
 - **Usage:**
@@ -1621,7 +1605,6 @@ type: api
 - **Modifiers:**
   - `.sync` - make the binding two-way. Only respected for prop bindings.
   - `.once` - make the binding one-time. Only respected for prop bindings.
-  - `.camel` - convert the attribute name to camelCase when setting it. Only respected for normal attributes. Used for binding camelCase SVG attributes.
 
 - **Usage:**
 
@@ -1645,7 +1628,6 @@ type: api
   <!-- class binding -->
   <div :class="{ red: isRed }"></div>
   <div :class="[classA, classB]"></div>
-  <div :class="[classA, { classB: isB, classC: isC }]">
 
   <!-- style binding -->
   <div :style="{ fontSize: size + 'px' }"></div>
@@ -1730,7 +1712,7 @@ type: api
   this.$refs.list
   ```
 
-- **See also:** [Child Component Refs](/guide/components.html#Child-Component-Refs)
+- **See also:** [Child Component Refs](/guide/components.html#Child_Component_Refs)
 
 ### v-el
 
@@ -1739,7 +1721,7 @@ type: api
 - **Argument:** `id (required)`
 
 - **Usage:**
-
+  
   Register a reference to a DOM element on its owner Vue instance's `$els` object for easier access.
 
 - **Note:**
@@ -1802,10 +1784,6 @@ type: api
 - **Attributes:**
   - `is`
 
-- **Param Attributes:**
-  - [`keep-alive`](/guide/components.html#keep-alive)
-  - [`transition-mode`](/guide/components.html#transition-mode)
-
 - **Usage:**
 
   Alternative syntax for invoking components. Primarily used for dynamic components with the `is` attribute:
@@ -1816,7 +1794,7 @@ type: api
   <component :is="componentId"></component>
   ```
 
-- **See also:** [Dynamic Components](/guide/components.html#Dynamic-Components)
+- **See also:** [Dynamic Components](/guide/components.html#Dynamic_Components)
 
 ### slot
 
@@ -1831,7 +1809,7 @@ type: api
 
   For detailed usage, see the guide section linked below.
 
-- **See also:** [Content Distribution with Slots](/guide/components.html#Content-Distribution-with-Slots)
+- **See also:** [Content Distribution with Slots](/guide/components.html#Content_Distribution_with_Slots)
 
 ### partial
 
@@ -1929,7 +1907,7 @@ type: api
   {{count}} {{count | pluralize 'item'}}
   ```
 
-  *1 => '1 item'*
+  *1 => '1 item'*  
   *2 => '2 items'*
 
   ``` html
@@ -1938,7 +1916,7 @@ type: api
 
   Will result in:
 
-  *1 => '1st'*
+  *1 => '1st'*  
   *2 => '2nd'*
   *3 => '3rd'*
   *4 => '4th'*
@@ -1950,7 +1928,7 @@ type: api
   - `{Number} [indent] - default: 2`
 
 - **Usage:**
-
+  
   Output the result of calling `JSON.stringify()` on the value instead of outputting the `toString()` value (e.g. `[object Object]`).
 
 - **Example:**
@@ -2183,3 +2161,37 @@ type: api
   })
   </script>
   {% endraw %}
+
+## Array Extension Methods
+
+### array.$set(index, value)
+
+- **Arguments**
+  - `{Number} index`
+  - `{*} value`
+
+- **Usage**
+  
+  Set an element in the array to a value by index and trigger view updates.
+
+  ``` js
+    vm.animals.$set(0, { name: 'Aardvark' })
+  ```
+
+- **See also:** [Mutation Methods](/guide/list.html#Mutation-Methods)
+
+### array.$remove(reference)
+
+- **Arguments**
+  - `{Reference} reference`
+
+- **Usage**
+  
+  Remove an element from an array by reference and trigger view updates.
+
+  ``` js
+    var aardvark = vm.animals[0]
+    vm.animals.$remove(aardvark)
+  ```
+
+- **See also:** [Mutation Methods](/guide/list.html#Mutation-Methods)
