@@ -17,7 +17,7 @@ The `transition` attribute can be used together with:
 - `v-if`
 - `v-show`
 - `v-for` (triggered for insertion and removal only)
-- Dynamic components (introduced in the [next section](components.html#Dynamic_Components))
+- Dynamic components (introduced in the [next section](components.html#Dynamic-Components))
 - On a component root node, and triggered via Vue instance DOM methods, e.g. `vm.$appendTo(el)`.
 
 When an element with transition is inserted or removed, Vue will:
@@ -57,6 +57,22 @@ You also need to define CSS rules for `.expand-transition`, `.expand-enter` and 
   padding: 0 10px;
   opacity: 0;
 }
+```
+
+You can achieve different transitions on the same element by using dynamic binding:
+
+```html
+<div v-if="show" :transition="transitionName">hello</div>
+```
+
+```js
+new Vue({
+  el: '...',
+  data: {
+    show: false,
+    transitionName: 'fade'
+  }
+})
 ```
 
 In addition, you can provide JavaScript hooks:
@@ -212,7 +228,7 @@ When the `show` property changes, Vue.js will insert or remove the `<div>` eleme
 
 In addition, if you remove an element when its enter transition is in progress, the `enterCancelled` hook will be called to give you the opportunity to clean up changes or timers created in `enter`. Vice-versa for leaving transitions.
 
-All of the above hook functions are called with their `this` contexts set to the associated Vue instances. If the element is the root node of a Vue instance, that instance will be used as the context. Otherwise, the context will be the owner instance of the transition directive.
+All of the above hook functions are called with their `this` contexts set to the associated Vue instances. It follows the same rule of compilation scopes: a transition's `this` context will point to the scope it is compiled in.
 
 Finally, the `enter` and `leave` can optionally take a second callback argument. When you do so, you are indicating that you want to explicitly control when the transition should end, so instead of waiting for the CSS `transitionend` event, Vue.js will expect you to eventually call the callback to finish the transition. For example:
 
@@ -245,6 +261,9 @@ Example: (omitting prefixed CSS rules here)
 ```
 
 ``` css
+.bounce-transition {
+  display: inline-block; /* otherwise scale animation won't work */
+}
 .bounce-enter {
   animation: bounce-in .5s;
 }
@@ -283,6 +302,9 @@ Example: (omitting prefixed CSS rules here)
 </div>
 
 <style>
+  .bounce-transition {
+    display: inline-block;
+  }
   .bounce-enter {
     -webkit-animation: bounce-in .5s;
     animation: bounce-in .5s;
@@ -293,52 +315,58 @@ Example: (omitting prefixed CSS rules here)
   }
   @keyframes bounce-in {
     0% {
-      transform: scale(0);
       -webkit-transform: scale(0);
+      transform: scale(0);
     }
     50% {
-      transform: scale(1.5);
       -webkit-transform: scale(1.5);
+      transform: scale(1.5);
     }
     100% {
-      transform: scale(1);
       -webkit-transform: scale(1);
+      transform: scale(1);
     }
   }
   @keyframes bounce-out {
     0% {
-      transform: scale(1);
       -webkit-transform: scale(1);
+      transform: scale(1);
     }
     50% {
-      transform: scale(1.5);
       -webkit-transform: scale(1.5);
+      transform: scale(1.5);
     }
     100% {
-      transform: scale(0);
       -webkit-transform: scale(0);
+      transform: scale(0);
     }
   }
   @-webkit-keyframes bounce-in {
     0% {
       -webkit-transform: scale(0);
+      transform: scale(0);
     }
     50% {
       -webkit-transform: scale(1.5);
+      transform: scale(1.5);
     }
     100% {
       -webkit-transform: scale(1);
+      transform: scale(1);
     }
   }
   @-webkit-keyframes bounce-out {
     0% {
       -webkit-transform: scale(1);
+      transform: scale(1);
     }
     50% {
       -webkit-transform: scale(1.5);
+      transform: scale(1.5);
     }
     100% {
       -webkit-transform: scale(0);
+      transform: scale(0);
     }
   }
 </style>
@@ -393,7 +421,7 @@ Then you can use it with the `transition` attribute, same deal:
 It's possible to create staggering transitions when using `transition` with `v-for`. You can do this either by adding a `stagger`, `enter-stagger` or `leave-stagger` attribute to your transitioned element:
 
 ``` html
-<div v-for="list" transition stagger="100"></div>
+<div v-for="item in list" transition="stagger" stagger="100"></div>
 ```
 
 Or, you can provide a `stagger`, `enterStagger` or `leaveStagger` hook for finer-grained control:

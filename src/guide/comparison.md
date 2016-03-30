@@ -32,7 +32,7 @@ Instead of a Virtual DOM, Vue.js uses the actual DOM as the template and keeps r
 
 API-wise, one issue with React (or JSX) is that the render function often involves a lot of logic, and ends up looking more like a piece of program (which in fact it is) rather than a visual representation of the interface. For some developers this is a bonus, but for designer/developer hybrids like me, having a template makes it much easier to think visually about the design and CSS. JSX mixed with JavaScript logic breaks that visual model I need to map the code to the design. In contrast, Vue.js pays the cost of a lightweight data-binding DSL so that we have a visually scannable template and with logic encapsulated into directives and filters.
 
-Another issue with React is that because DOM updates are completely delegated to the Virtual DOM, it's a bit tricky when you actually **want** to control the DOM yourself (although theoretically you can, you'd be essentially working against the library when you do that). For applications that needs ad-hoc custom DOM manipulations, especially animations with complex timing requirements, this can become a pretty annoying restriction. On this front, Vue.js allows for more flexibility and there are [multiple FWA/Awwwards winning sites](https://github.com/vuejs/vue/wiki/Projects-Using-Vue.js#interactive-experiences) built with Vue.js.
+Another issue with React is that because DOM updates are completely delegated to the Virtual DOM, it's a bit tricky when you actually **want** to control the DOM yourself (although theoretically you can, you'd be essentially working against the library when you do that). For applications that needs ad-hoc custom DOM manipulations, especially animations with complex timing requirements, this can become a pretty annoying restriction. On this front, Vue.js allows for more flexibility and there are [multiple FWA/Awwwards winning sites](https://github.com/vuejs/awesome-vue#interactive-experiences) built with Vue.js.
 
 Some additional notes:
 
@@ -40,9 +40,9 @@ Some additional notes:
 
 - React, due to its functional nature, plays very well with functional programming patterns. However it also introduces a higher learning barrier for junior developers and beginners. Vue is much easier to pick up and get productive with in this regard.
 
-- For large applications, the React community has been doing a lot of innovation in terms of state management solutions, e.g. Flux/Redux. Vue itself doesn't really address that problem (same for React core), but the state management patterns can be easily adopted for a similar architecture. I've seen users use Redux with Vue, and engineers at Optimizely have been using NuclearJS (their Flux dialect) with Vue as well.
+- For large applications, the React community has been doing a lot of innovation in terms of state management solutions, e.g. Flux/Redux. Vue itself doesn't really address that problem (same for React core), but the state management patterns can be easily adopted for a similar architecture. Vue has its own state management solution called [Vuex](https://github.com/vuejs/vuex), and it's also possible to [use Redux with Vue](https://github.com/egoist/revue).
 
-- The trend in React development is pushing you to put everything in JavaScript, including your CSS. There has been many CSS-in-JS solutions out there but all more or less have its own problems. And most importantly, it deviates from the standard CSS authoring experience and makes it very awkward to leverage existing work in the CSS community. Vue's [single file components](http://vuejs.org/guide/application.html#Single_File_Components) gives you component-encapsulated CSS while still allowing you to use your pre-processors of choice.
+- The trend in React development is pushing you to put everything in JavaScript, including your CSS. There has been many CSS-in-JS solutions out there but all more or less have its own problems. And most importantly, it deviates from the standard CSS authoring experience and makes it very awkward to leverage existing work in the CSS community. Vue's [single file components](/guide/application.html#Single-File-Components) gives you component-encapsulated CSS while still allowing you to use your pre-processors of choice.
 
 ## Ember
 
@@ -72,4 +72,4 @@ Riot 2.0 provides a similar component-based development model (which is called a
 - A far-more powerful router (Riot’s routing API is just way too minimal)
 - More mature tooling support (see webpack + vue-loader)
 - Transition effect system (Riot has none)
-- Better performance. (Riot in fact uses dirty checking rather than a virtual-dom, and thus suffers from the same performance issues with Angular.)
+- Better performance. (Riot in fact uses dirty checking rather than a virtual-dom, and thus suffers from the same performance issues as Angular.)
