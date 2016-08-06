@@ -4,8 +4,6 @@ type: guide
 order: 4
 ---
 
-Vue.js uses a tiny Virtual DOM implementation to render components and interpolate variables.
-
 Vue.js uses a DOM-based templating implementation. This means that all Vue.js templates are essentially valid, parsable HTML enhanced with some special attributes. Keep that in mind, since this makes Vue templates fundamentally different from string-based templates.
 
 ## Interpolations
@@ -20,31 +18,37 @@ The most basic form of data binding is text interpolation using the "Mustache" s
 
 The mustache tag will be replaced with the value of the `msg` property on the corresponding data object. It will also be updated whenever the data object's `msg` property changes.
 
-You can also perform one-time interpolations that do not update on data change by using the [v-once directive](!!TODO), but keep in mind this will also affect any binding on the same node:
+You can also perform one-time interpolations that do not update on data change:
 
 ``` html
-<span v-once>This will never change: {{ msg }}</span>
+<span>This will never change: {{* msg }}</span>
 ```
 
 ### Raw HTML
 
-The double mustaches interprets the data as plain text, not HTML. In order to output real HTML, you will need to use the `v-html` directive:
+The double mustaches interprets the data as plain text, not HTML. In order to output real HTML, you will need to use triple mustaches:
 
 ``` html
-<div v-html="rawHtml"></div>
+<div>{{{ raw_html }}}</div>
 ```
 
-The contents are inserted as plain HTML - data bindings are ignored. If you need to reuse template pieces, you should use [functional components](!!TODO).
+The contents are inserted as plain HTML - data bindings are ignored. If you need to reuse template pieces, you should use [partials](/api/#partial).
 
 <p class="tip">Dynamically rendering arbitrary HTML on your website can be very dangerous because it can easily lead to [XSS attacks](https://en.wikipedia.org/wiki/Cross-site_scripting). Only use HTML interpolation on trusted content and **never** on user-provided content.</p>
 
 ### Attributes
 
-Mustaches cannot be used inside HTML attributes, instead use a [v-bind directive](!!TODO):
+Mustaches can also be used inside HTML attributes:
+
+``` html
+<div id="item-{{ id }}"></div>
+```
+
+Note that attribute interpolations are disallowed in Vue.js directives and special attributes. Don't worry, Vue.js will raise warnings for you when mustaches are used in wrong places.
 
 ## Binding Expressions
 
-The text we put inside mustache tags are called **binding expressions** with an additional [syntax sugar for filters](#Filters). In Vue.js, a binding expression consists of a single JavaScript expression.
+The text we put inside mustache tags are called **binding expressions**. In Vue.js, a binding expression consists of a single JavaScript expression optionally followed by one or more filters.
 
 ### JavaScript Expressions
 
@@ -70,28 +74,15 @@ These expressions will be evaluated in the data scope of the owner Vue instance.
 
 ### Filters
 
-Vue.js allows you to define filters that can be later on appended to the end of a **mustache** **binding expression**, denoted by the "pipe" symbol:
+Vue.js allows you to append optional "filters" to the end of an expression, denoted by the "pipe" symbol:
 
 ``` html
 {{ message | capitalize }}
 ```
 
-<p class="tip">Vue 2 filters can only be used inside mustache bindings. To achieve the same behavior inside other <strong>binding expressions</strong>, you should use [Computed properties](!!TODO) instead.</p>
+Here we are "piping" the value of the `message` expression through the built-in `capitalize` filter, which is in fact just a JavaScript function that returns the capitalized value. Vue.js provides a number of built-in filters, and we will talk about how to write your own filters later.
 
-The filter function always receives the expression's value as the first argument.
-
-``` js
-new Vue({
-  ...
-  filters: {
-    capitalize: function (value) {
-      if (!value) return ''
-      value = value.toString()
-      return value.charAt(0).toUpperCase() + value.slice(1)
-    }
-  }
-})
-```
+Note that the pipe syntax is not part of JavaScript syntax, therefore you cannot mix filters inside expressions; you can only append them at the end of an expression.
 
 Filters can be chained:
 
@@ -99,17 +90,17 @@ Filters can be chained:
 {{ message | filterA | filterB }}
 ```
 
-Filters are JavaScript functions, therefore they can take arguments:
+Filters can also take arguments:
 
 ``` html
-{{ message | filterA('arg1', arg2) }}
+{{ message | filterA 'arg1' arg2 }}
 ```
 
-Quoted arguments are interpreted as plain strings, while un-quoted ones will be evaluated as expressions. Here, the plain string `'arg1'` will be passed into the filter as the second argument, and the value of expression `arg2` will be evaluated and passed in as the third argument.
+The filter function always receives the expression's value as the first argument. Quoted arguments are interpreted as plain string, while un-quoted ones will be evaluated as expressions. Here, the plain string `'arg1'` will be passed into the filter as the second argument, and the value of expression `arg2` will be evaluated and passed in as the third argument.
 
 ## Directives
 
-Directives are special attributes with the `v-` prefix. Directive attribute values are expected to be **binding expressions**, so the rules about JavaScript expressions mentioned above apply here as well. A directive's job is to reactively apply special behavior to the DOM when the value of its expression changes. Let's review the example we saw in the introduction:
+Directives are special attributes with the `v-` prefix. Directive attribute values are expected to be **binding expressions**, so the rules about JavaScript expressions and filters mentioned above apply here as well. A directive's job is to reactively apply special behavior to the DOM when the value of its expression changes. Let's review the example we saw in the introduction:
 
 ``` html
 <p v-if="greeting">Hello!</p>
@@ -178,4 +169,4 @@ or
 <a @click="doSomething"></a>
 ```
 
-They may look a bit different from "valid" HTML, but all Vue.js supported browsers can parse it correctly, and they do not appear in the final rendered markup. The shorthand syntax is totally optional, but you will likely appreciate it when you learn more about its usage later.
+They may look a bit different from normal HTML, but all Vue.js supported browsers can parse it correctly, and they do not appear in the final rendered markup. The shorthand syntax is totally optional, but you will likely appreciate it when you learn more about its usage later.
