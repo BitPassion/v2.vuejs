@@ -53,9 +53,8 @@
   function initVersionSelect () {
     // version select
     document.querySelector('.version-select').addEventListener('change', function (e) {
-      var version = e.target.value
+      var version = e.target.value.replace('.', '')
       var section = window.location.pathname.match(/\/(\w+?)\//)[1]
-      if (version === 'SELF') return
       window.location.assign(
         'http://' +
         version +
