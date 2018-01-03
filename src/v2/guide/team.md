@@ -364,7 +364,7 @@ order: 803
         'vuejs.org', 'jp.vuejs.org'
       ],
       reposPersonal: [
-        'vue-i18n', 'vue-i18n-loader', 'vue-i18n-extensions'
+        'vue-i18n', 'vue-i18n-loader', 'vue-validator'
       ],
       links: [
         'https://cuusoo.com', 'http://frapwings.jp'
@@ -591,42 +591,12 @@ order: 803
       github: 'shentao',
       twitter: 'DamianDulisz',
       work: {
-        role: 'Consultant'
+        role: 'Senior Frontend Developer',
+        org: 'Monterail',
+        orgUrl: 'https://www.monterail.com/'
       },
       reposPersonal: [
-        'shentao/vue-multiselect'
-      ]
-    },
-    {
-      name: 'kingwl',
-      title: 'New Bee',
-      city: 'Beijin, China',
-      languages: ['zh'],
-      work: {
-        role: 'Software Development Engineer',
-        org: 'Chaitin',
-        orgUrl: 'https://chaitin.cn/'
-      },
-      github: 'kingwl',
-      reposOfficial: [
-        'vue'
-      ]
-    },
-    {
-      name: 'Alex Kyriakidis',
-      title: 'Vueducator Extraordinaire',
-      city: 'Thessaloniki, Greece',
-      languages: ['el', 'en'],
-      github: 'hootlex',
-      twitter: 'hootlex',
-      work: {
-        role: 'Consultant / Author'
-      },
-      reposPersonal: [
-        'vuejs-paginator', 'vuedo/vuedo', 'the-majesty-of-vuejs-2'
-      ],
-      links: [
-        'https://vuejsfeed.com/', 'https://vueschool.io/'
+        'monterail/vue-multiselect', 'monterail/vue-newsletter'
       ]
     }
   ]))
@@ -672,6 +642,23 @@ order: 803
       links: [
         'https://twitter.com/VueJsNews',
         'http://www.kharysharpe.com/'
+      ]
+    },
+    {
+      name: 'Alex Kyriakidis',
+      title: 'Vueducator Extraordinaire',
+      city: 'Thessaloniki, Greece',
+      languages: ['el', 'en'],
+      github: 'hootlex',
+      twitter: 'hootlex',
+      work: {
+        role: 'Consultant / Author'
+      },
+      reposPersonal: [
+        'vuejs-paginator', 'vuedo/vuedo', 'the-majesty-of-vuejs-2'
+      ],
+      links: [
+        'https://vuejsfeed.com/', 'https://vueschool.io/'
       ]
     },
     {

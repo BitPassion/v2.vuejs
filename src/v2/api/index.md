@@ -175,7 +175,7 @@ type: api
 
 ## Global API
 
-### Vue.extend( options )
+<h3 id="Vue-extend">Vue.extend( options )</h3>
 
 - **Arguments:**
   - `{Object} options`
@@ -214,7 +214,7 @@ type: api
 
 - **See also:** [Components](../guide/components.html)
 
-### Vue.nextTick( [callback, context] )
+<h3 id="Vue-nextTick">Vue.nextTick( [callback, context] )</h3>
 
 - **Arguments:**
   - `{Function} [callback]`
@@ -243,7 +243,7 @@ type: api
 
 - **See also:** [Async Update Queue](../guide/reactivity.html#Async-Update-Queue)
 
-### Vue.set( target, key, value )
+<h3 id="Vue-set">Vue.set( target, key, value )</h3>
 
 - **Arguments:**
   - `{Object | Array} target`
@@ -260,7 +260,7 @@ type: api
 
 - **See also:** [Reactivity in Depth](../guide/reactivity.html)
 
-### Vue.delete( target, key )
+<h3 id="Vue-delete">Vue.delete( target, key )</h3>
 
 - **Arguments:**
   - `{Object | Array} target`
@@ -276,7 +276,7 @@ type: api
 
 - **See also:** [Reactivity in Depth](../guide/reactivity.html)
 
-### Vue.directive( id, [definition] )
+<h3 id="Vue-directive">Vue.directive( id, [definition] )</h3>
 
 - **Arguments:**
   - `{string} id`
@@ -307,7 +307,7 @@ type: api
 
 - **See also:** [Custom Directives](../guide/custom-directive.html)
 
-### Vue.filter( id, [definition] )
+<h3 id="Vue-filter">Vue.filter( id, [definition] )</h3>
 
 - **Arguments:**
   - `{string} id`
@@ -327,7 +327,7 @@ type: api
   var myFilter = Vue.filter('my-filter')
   ```
 
-### Vue.component( id, [definition] )
+<h3 id="Vue-component">Vue.component( id, [definition] )</h3>
 
 - **Arguments:**
   - `{string} id`
@@ -350,7 +350,7 @@ type: api
 
 - **See also:** [Components](../guide/components.html)
 
-### Vue.use( plugin )
+<h3 id="Vue-use">Vue.use( plugin )</h3>
 
 - **Arguments:**
   - `{Object | Function} plugin`
@@ -363,7 +363,7 @@ type: api
 
 - **See also:** [Plugins](../guide/plugins.html)
 
-### Vue.mixin( mixin )
+<h3 id="Vue-mixin">Vue.mixin( mixin )</h3>
 
 - **Arguments:**
   - `{Object} mixin`
@@ -374,7 +374,7 @@ type: api
 
 - **See also:** [Global Mixin](../guide/mixins.html#Global-Mixin)
 
-### Vue.compile( template )
+<h3 id="Vue-compile">Vue.compile( template )</h3>
 
 - **Arguments:**
   - `{string} template`
@@ -397,7 +397,7 @@ type: api
 
 - **See also:** [Render Functions](../guide/render-function.html)
 
-### Vue.version
+<h3 id="Vue-version">Vue.version</h3>
 
 - **Details**: Provides the installed version of Vue as a string. This is especially useful for community plugins and components, where you might use different strategies for different versions.
 
@@ -1418,7 +1418,7 @@ type: api
 
 ## Instance Methods / Data
 
-### vm.$watch( expOrFn, callback, [options] )
+<h3 id="vm-watch">vm.$watch( expOrFn, callback, [options] )</h3>
 
 - **Arguments:**
   - `{string | Function} expOrFn`
@@ -1485,7 +1485,7 @@ type: api
   // `callback` is fired immediately with current value of `a`
   ```
 
-### vm.$set( target, key, value )
+<h3 id="vm-set">vm.$set( target, key, value )</h3>
 
 - **Arguments:**
   - `{Object | Array} target`
@@ -1500,7 +1500,7 @@ type: api
 
 - **See also:** [Vue.set](#Vue-set)
 
-### vm.$delete( target, key )
+<h3 id="vm-delete">vm.$delete( target, key )</h3>
 
 - **Arguments:**
   - `{Object | Array} target`
@@ -1514,7 +1514,7 @@ type: api
 
 ## Instance Methods / Events
 
-### vm.$on( event, callback )
+<h3 id="vm-on">vm.$on( event, callback )</h3>
 
 - **Arguments:**
   - `{string | Array<string>} event` (array only supported in 2.2.0+)
@@ -1534,7 +1534,7 @@ type: api
   // => "hi"
   ```
 
-### vm.$once( event, callback )
+<h3 id="vm-once">vm.$once( event, callback )</h3>
 
 - **Arguments:**
   - `{string} event`
@@ -1544,7 +1544,7 @@ type: api
 
   Listen for a custom event, but only once. The listener will be removed once it triggers for the first time.
 
-### vm.$off( [event, callback] )
+<h3 id="vm-off">vm.$off( [event, callback] )</h3>
 
 - **Arguments:**
   - `{string | Array<string>} event` (array only supported in 2.2.2+)
@@ -1560,7 +1560,7 @@ type: api
 
   - If both event and callback are given, remove the listener for that specific callback only.
 
-### vm.$emit( event, [...args] )
+<h3 id="vm-emit">vm.$emit( event, [...args] )</h3>
 
 - **Arguments:**
   - `{string} event`
@@ -1570,7 +1570,7 @@ type: api
 
 ## Instance Methods / Lifecycle
 
-### vm.$mount( [elementOrSelector] )
+<h3 id="vm-mount">vm.$mount( [elementOrSelector] )</h3>
 
 - **Arguments:**
   - `{Element | string} [elementOrSelector]`
@@ -1608,13 +1608,13 @@ type: api
   - [Lifecycle Diagram](../guide/instance.html#Lifecycle-Diagram)
   - [Server-Side Rendering](../guide/ssr.html)
 
-### vm.$forceUpdate()
+<h3 id="vm-forceUpdate">vm.$forceUpdate()</h3>
 
 - **Usage:**
 
   Force the Vue instance to re-render. Note it does not affect all child components, only the instance itself and child components with inserted slot content.
 
-### vm.$nextTick( [callback] )
+<h3 id="vm-nextTick">vm.$nextTick( [callback] )</h3>
 
 - **Arguments:**
   - `{Function} [callback]`
@@ -1650,7 +1650,7 @@ type: api
   - [Vue.nextTick](#Vue-nextTick)
   - [Async Update Queue](../guide/reactivity.html#Async-Update-Queue)
 
-### vm.$destroy()
+<h3 id="vm-destroy">vm.$destroy()</h3>
 
 - **Usage:**
 
