@@ -84,6 +84,8 @@ type: api
 
   > In 2.4.0+ this hook also captures errors thrown inside Vue custom event handlers.
 
+  > In 2.6.0+ this hook also captures errors thrown inside `v-on` DOM listeners. In addition, if any of the covered hooks or handlers returns a Promise chain (e.g. async functions), the error from that Promise chain will also be handled.
+
   > Error tracking services [Sentry](https://sentry.io/for/vue/) and [Bugsnag](https://docs.bugsnag.com/platforms/browsers/vue/) provide official integrations using this option.
 
 ### warnHandler
@@ -401,6 +403,33 @@ type: api
   ```
 
 - **See also:** [Render Functions](../guide/render-function.html)
+
+### Vue.observable( value )
+
+> New in 2.6.0+
+
+- **Arguments:**
+  - `{Object} value`
+
+- **Usage:**
+
+  Explicitly creates a reactive object. This is what Vue performs internally on objects returned from a component's `data()` function.
+
+  The returned object can be used directly inside [render functions](../guide/render-function.html) and [computed properties](../guide/computed.html), and will trigger appropriate updates when mutated. It can be used as a minimal cross-component state store for simple scenarios.
+
+  ``` js
+  const obj = Vue.observable({ count: 0 })
+
+  const Demo = {
+    render(h) {
+      return h('button', {
+        on: { click: () => { obj.count++ }}
+      }, `count is: ${obj.count}`)
+    }
+  }
+  ```
+
+- **See also:** [Reactivity in Depth](../guide/reactivity.html)
 
 ### Vue.version
 
@@ -1391,7 +1420,7 @@ type: api
 
 > New in 2.1.0+
 
-- **Type:** `{ [name: string]: props => VNode | Array<VNode> }`
+- **Type:** `{ [name: string]: props => Array<VNode> | undefined }`
 
 - **Read only**
 
@@ -1400,6 +1429,12 @@ type: api
   Used to programmatically access [scoped slots](../guide/components.html#Scoped-Slots). For each slot, including the `default` one, the object contains a corresponding function that returns VNodes.
 
   Accessing `vm.$scopedSlots` is most useful when writing a component with a [render function](../guide/render-function.html).
+
+  **Note:** since 2.6.0+, there are two notable changes to this property:
+
+  1. Scoped slot functions now are guaranteed to return Array of VNodes, unless the return value is invalid, in which case the function will return `undefined`.
+
+  2. All normal slots on `vm.$slots` are now also exposed on `vm.$scopeSlots` as functions. If you work with render functions, it is now recommended to always access all slots via `vm.$scopedSlots` for consistency.
 
 - **See also:**
   - [`<slot>` Component](#slot-1)
@@ -1486,9 +1521,6 @@ type: api
   // function
   vm.$watch(
     function () {
-      // everytime the expression `this.a + this.b` yields a different result,
-      // the handler will be called. It's as if we were watching a computed
-      // property without defining the computed property itself
       return this.a + this.b
     },
     function (newVal, oldVal) {
@@ -1948,7 +1980,7 @@ type: api
 
 ### v-for
 
-- **Expects:** `Array | Object | number | string`
+- **Expects:** `Array | Object | number | string | Iterable (since 2.6)`
 
 - **Usage:**
 
@@ -1975,6 +2007,8 @@ type: api
     {{ item.text }}
   </div>
   ```
+
+  Since 2.6, `v-for` can also work on values that implement the [Iterable Protocol](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#The_iterable_protocol), including native `Map` and `Set`. However it should be noted that Vue 2.x currently does not support reactivity detection on `Map` and `Set` values.
 
   <p class="tip">When used together with v-if, v-for has a higher priority than v-if. See the <a href="../guide/list.html#v-for-with-v-if">list rendering guide</a> for details.</p>
 
@@ -2117,6 +2151,9 @@ type: api
 
   <!-- DOM attribute binding with prop modifier -->
   <div v-bind:text-content.prop="text"></div>
+
+  <!-- shorthand for prop modifier (2.6+) -->
+  <div .text-content="text"></div>
 
   <!-- prop binding. "prop" must be declared in my-component. -->
   <my-component :prop="someThing"></my-component>
