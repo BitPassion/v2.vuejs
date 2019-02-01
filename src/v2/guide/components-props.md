@@ -313,7 +313,7 @@ This can be especially useful in combination with the `$attrs` instance property
 
 ```js
 {
-  required: true,
+  class: 'username-input',
   placeholder: 'Enter your username'
 }
 ```
@@ -337,14 +337,12 @@ Vue.component('base-input', {
 })
 ```
 
-<p class="tip">Note that `inheritAttrs: false` option does **not** affect `style` and `class` bindings.</p>
-
 This pattern allows you to use base components more like raw HTML elements, without having to care about which element is actually at its root:
 
 ```html
 <base-input
   v-model="username"
-  required
+  class="username-input"
   placeholder="Enter your username"
 ></base-input>
 ```
