@@ -1,4 +1,3 @@
 ---
 sponsors: true
-type: sponsors
 ---
