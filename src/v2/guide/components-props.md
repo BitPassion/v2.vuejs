@@ -347,7 +347,6 @@ This pattern allows you to use base components more like raw HTML elements, with
 
 ```html
 <base-input
-  label="Username:"
   v-model="username"
   required
   placeholder="Enter your username"

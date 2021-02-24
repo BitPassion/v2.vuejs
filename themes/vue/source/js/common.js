@@ -280,7 +280,6 @@
     })
   }
 
-
   /**
   * Modal Video Player
   */
